@@ -1,0 +1,16 @@
+services:
+  - name: marp-api-server
+    type: web
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+    disk:
+      name: tmp
+      mountPath: /tmp
+      sizeGB: 1
