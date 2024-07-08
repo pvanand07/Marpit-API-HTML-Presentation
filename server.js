@@ -1,11 +1,22 @@
 const express = require('express');
 const { marpCli } = require('@marp-team/marp-cli');
+const puppeteer = require('puppeteer');
 const fs = require('fs').promises;
 const os = require('os');
 const path = require('path');
 
 const app = express();
 app.use(express.json());
+
+let browser;
+
+async function initializeBrowser() {
+  browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+}
+
+initializeBrowser();
 
 app.post('/convert', async (req, res) => {
   const { markdown, outputFormat, options = [] } = req.body;
@@ -25,15 +36,16 @@ app.post('/convert', async (req, res) => {
       inputFile,
       '--output', outputFile,
       `--${outputFormat}`,
-      '--html',  // Added --html flag for all conversions
+      '--html',
+      '--allow-local-files',
+      '--puppeteer-launch-args', '["--no-sandbox", "--disable-setuid-sandbox"]',
+      '--puppeteer-browser-executable', await browser.executablePath(),
       ...options
     ];
 
-    // Add delay for PDF and PPTX conversion
     if (outputFormat === 'pdf' || outputFormat === 'pptx') {
-      cliOptions.push('--chrome-options', '{"args":["--no-sandbox", "--disable-setuid-sandbox"]}');
-      cliOptions.push('--allow-local-files');
-      cliOptions.push(`--${outputFormat}-delay`, '3000');  // 3 seconds delay
+      cliOptions.push(`--${outputFormat}-notes`);
+      cliOptions.push(`--${outputFormat}-delay`, '3000');
     }
 
     await marpCli(cliOptions);
@@ -53,4 +65,12 @@ app.post('/convert', async (req, res) => {
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Marp API server listening on port ${port}`);
+});
+
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  if (browser) {
+    await browser.close();
+  }
+  process.exit(0);
 });
