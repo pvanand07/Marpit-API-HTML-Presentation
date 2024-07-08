@@ -1,13 +1,11 @@
 const express = require('express');
 const { marpCli } = require('@marp-team/marp-cli');
 const fs = require('fs').promises;
+const os = require('os');
 const path = require('path');
 
 const app = express();
 app.use(express.json());
-
-// Use the dedicated temporary directory
-const tmpDir = '/tmp/marp-work';
 
 app.post('/convert', async (req, res) => {
   const { markdown, outputFormat, options = [] } = req.body;
@@ -17,8 +15,9 @@ app.post('/convert', async (req, res) => {
   }
 
   try {
-    const inputFile = path.join(tmpDir, `input_${Date.now()}.md`);
-    const outputFile = path.join(tmpDir, `output_${Date.now()}.${outputFormat}`);
+    const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'marp-'));
+    const inputFile = path.join(tmpDir, 'input.md');
+    const outputFile = path.join(tmpDir, `output.${outputFormat}`);
 
     await fs.writeFile(inputFile, markdown);
 
@@ -30,10 +29,10 @@ app.post('/convert', async (req, res) => {
       ...options
     ];
 
-    // Add options for PDF and PPTX conversion
+    // Add delay for PDF and PPTX conversion
     if (outputFormat === 'pdf' || outputFormat === 'pptx') {
+      cliOptions.push('--chrome-options', '{"args":["--no-sandbox", "--disable-setuid-sandbox"]}');
       cliOptions.push('--allow-local-files');
-      cliOptions.push(`--${outputFormat}-notes`);
       cliOptions.push(`--${outputFormat}-delay`, '3000');  // 3 seconds delay
     }
 
@@ -41,9 +40,7 @@ app.post('/convert', async (req, res) => {
 
     const output = await fs.readFile(outputFile);
 
-    // Clean up temporary files
-    await fs.unlink(inputFile);
-    await fs.unlink(outputFile);
+    await fs.rm(tmpDir, { recursive: true });
 
     res.contentType(outputFormat);
     res.send(output);
