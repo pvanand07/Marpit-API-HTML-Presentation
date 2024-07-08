@@ -1,0 +1,13 @@
+{
+  "name": "marp-api-server",
+  "version": "1.0.0",
+  "description": "Marp API server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "@marp-team/marp-cli": "^2.0.0"
+  }
+}
