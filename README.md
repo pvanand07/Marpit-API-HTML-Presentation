@@ -1,9 +1,115 @@
-<div align="center">
- 
-# [Marpit](https://github.com/marp-team/marpit) API (Docker)
- 
-For creating interactive feature rich html/pdf presentations using .md file as input
-</div>
+
+# Marp API
+
+The Marp API is a Node.js Express application that allows you to convert Markdown files to various formats using the Marp CLI tool.
+
+## Features
+
+- Convert Markdown files to PDF, PPTX, or HTML
+- Supports custom Marp CLI options
+- Runs in a Docker container for easy deployment
+
+## Prerequisites
+
+- Node.js (version 16 or later)
+- Docker (optional, if using Docker for deployment)
+
+## Installation
+
+There are three ways to install and run the Marp API:
+
+<details>
+  <summary><h3>1. Docker</h3></summary>
+
+  1. Clone the repository:
+     ```
+     git clone https://github.com/yourusername/marp-api.git
+     cd marp-api
+     ```
+
+  2. Build the Docker image:
+     ```
+     docker build -t marp-api .
+     ```
+
+  3. Run the Docker container:
+     ```
+     docker run -p 3000:3000 marp-api
+     ```
+</details>
+
+<details>
+  <summary><h3>2. Docker Compose</h3></summary>
+
+  1. Clone the repository:
+     ```
+     git clone https://github.com/yourusername/marp-api.git
+     cd marp-api
+     ```
+
+  2. Run the Docker Compose command:
+     ```
+     docker-compose up
+     ```
+</details>
+
+<details>
+  <summary><h3>3. npm</h3></summary>
+
+  1. Clone the repository:
+     ```
+     git clone https://github.com/yourusername/marp-api.git
+     cd marp-api
+     ```
+
+  2. Install dependencies:
+     ```
+     npm install
+     ```
+
+  3. Start the server:
+     ```
+     npm start
+     ```
+</details>
+
+## Usage
+
+<h3>API Endpoint</h3>
+
+<ul>
+  <li>URL: <code>POST /convert</code></li>
+  <li>Request Body:
+    <pre>
+```json
+{
+  "markdown": "# Your Markdown content here",
+  "outputFormat": "pdf",
+  "options": [
+    "--theme-set", "path/to/your/theme.css"
+  ]
+}
+```
+    </pre>
+    <ul>
+      <li><code>markdown</code> (required): The Markdown content to be converted.</li>
+      <li><code>outputFormat</code> (required): The desired output format. Supported values: <code>pdf</code>, <code>html</code>.</li>
+      <li><code>options</code> (optional): An array of additional Marp CLI options.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>Example Request</h3>
+
+<pre>
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{
+  "markdown": "# Hello, Marp!",
+  "outputFormat": "pdf"
+}' http://localhost:3000/convert
+```
+</pre>
+
 
 [IMP] If you are deploying on HF🤗 spaces, keep only the below section in Readme.md (required for spaces to recognize docker)
  ```
