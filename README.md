@@ -62,6 +62,30 @@ Choose one of the following installation methods:
    ```
 </details>
 
+<details>
+<summary><strong>Option 4: Hugging Face Spaces</strong></summary>
+
+To deploy this project on Hugging Face Spaces:
+
+1. Create a new space on [Hugging Face Spaces](https://huggingface.co/spaces) with a blank docker template
+2. Upload the files or clone from this repo.
+3. Edit the README.md file to include only the following content:
+
+```yaml
+---
+title: Marpit Backend
+emoji: 👁
+colorFrom: pink
+colorTo: purple
+sdk: docker
+pinned: false
+---
+```
+
+This metadata is required for Spaces to recognize and properly deploy your Docker-based application.
+
+</details>
+
 ## Usage
 
 Send a POST request to the `/convert` endpoint with the following JSON payload:
@@ -110,17 +134,6 @@ The included Dockerfile sets up the environment with Node.js, Chrome, and necess
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-[IMP] If you are deploying on HF🤗 spaces, keep only the below section in Readme.md (required for spaces to recognize docker)
- ```
----
-title: Marpit Backend
-emoji: 👁
-colorFrom: pink
-colorTo: purple
-sdk: docker
-pinned: false
----
-```
 
 ## Documentation from official [Marpit repo](https://github.com/marp-team/marpit)
 <div align="center">
@@ -166,3 +179,7 @@ See [the documentation of Marpit](https://marpit.marp.app/?id=getting-started) t
 ## License
 
 This framework releases under the [MIT License](LICENSE).
+
+
+
+
