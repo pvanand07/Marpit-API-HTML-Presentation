@@ -23,7 +23,7 @@ There are three ways to install and run the Marp API:
 
   1. Clone the repository:
      ```
-     git clone https://github.com/yourusername/marp-api.git
+     git clone https://github.com/pvanand07/Marpit-API-HTML-Presentation.git
      cd marp-api
      ```
 
@@ -43,7 +43,7 @@ There are three ways to install and run the Marp API:
 
   1. Clone the repository:
      ```
-     git clone https://github.com/yourusername/marp-api.git
+     git clone https://github.com/pvanand07/Marpit-API-HTML-Presentation.git
      cd marp-api
      ```
 
@@ -58,7 +58,7 @@ There are three ways to install and run the Marp API:
 
   1. Clone the repository:
      ```
-     git clone https://github.com/yourusername/marp-api.git
+     git clone https://github.com/pvanand07/Marpit-API-HTML-Presentation.git
      cd marp-api
      ```
 
