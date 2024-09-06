@@ -1,7 +1,7 @@
 
 # Marp API
 
-The Marp API is a Node.js Express application that allows you to convert Markdown files to various formats using the Marp CLI tool.
+The Marp API is a Node.js Express application that allows you to convert Markdown files to various formats using the Marp CLI tool, containerized for easy deployment and usage.
 
 ## Features
 
