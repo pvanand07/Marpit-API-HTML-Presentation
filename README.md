@@ -5,7 +5,7 @@ The Marp API is a Node.js Express application that allows you to convert Markdow
 
 ## Features
 
-- Convert Markdown files to PDF, PPTX, or HTML
+- Convert Markdown files to PDF or HTML
 - Supports custom Marp CLI options
 - Runs in a Docker container for easy deployment
 
