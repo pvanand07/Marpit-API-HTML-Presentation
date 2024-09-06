@@ -1,3 +1,4 @@
+[IMP] If you are deploying on HF🤗 spaces, keep only the below section in Readme.md (required for spaces to recognize docker)
 ---
 title: Marpit Backend
 emoji: 👁
@@ -7,4 +8,3 @@ sdk: docker
 pinned: false
 ---
 
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
