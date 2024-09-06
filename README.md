@@ -1,115 +1,114 @@
-
 # Marp API
 
-The Marp API is a Node.js Express application that allows you to convert Markdown files to various formats using the Marp CLI tool, containerized for easy deployment and usage.
+This project provides an API for converting Markdown to various presentation formats using Marp.
 
 ## Features
 
-- Convert Markdown files to PDF or HTML
-- Supports custom Marp CLI options
-- Runs in a Docker container for easy deployment
-
-## Prerequisites
-
-- Node.js (version 16 or later)
-- Docker (optional, if using Docker for deployment)
+- Convert Markdown to PDF, PPTX (slides as static images), or HTML
+- Customizable output options
+- Dockerized for easy deployment
 
 ## Installation
 
-There are three ways to install and run the Marp API:
+Choose one of the following installation methods:
 
 <details>
-  <summary><h3>1. Docker</h3></summary>
+<summary><strong>Option 1: Docker</strong></summary>
 
-  1. Clone the repository:
-     ```
-     git clone https://github.com/pvanand07/Marpit-API-HTML-Presentation.git
-     cd marp-api
-     ```
-
-  2. Build the Docker image:
-     ```
-     docker build -t marp-api .
-     ```
-
-  3. Run the Docker container:
-     ```
-     docker run -p 3000:3000 marp-api
-     ```
+1. Make sure you have Docker installed on your system.
+2. Clone this repository:
+   ```
+   git clone https://github.com/pvanand07/Marpit-API-HTML-Presentation.git
+   cd marp-api
+   ```
+3. Build and run the Docker container:
+   ```
+   docker build -t marp-api .
+   docker run -p 3000:3000 marp-api
+   ```
 </details>
 
 <details>
-  <summary><h3>2. Docker Compose</h3></summary>
+<summary><strong>Option 2: Docker Compose</strong></summary>
 
-  1. Clone the repository:
-     ```
-     git clone https://github.com/pvanand07/Marpit-API-HTML-Presentation.git
-     cd marp-api
-     ```
-
-  2. Run the Docker Compose command:
-     ```
-     docker-compose up
-     ```
+1. Ensure you have Docker and Docker Compose installed.
+2. Clone this repository:
+   ```
+   git clone https://github.com/pvanand07/Marpit-API-HTML-Presentation.git
+   cd marp-api
+   ```
+3. Run the application using Docker Compose:
+   ```
+   docker-compose up
+   ```
 </details>
 
 <details>
-  <summary><h3>3. npm</h3></summary>
+<summary><strong>Option 3: NPM</strong></summary>
 
-  1. Clone the repository:
-     ```
-     git clone https://github.com/pvanand07/Marpit-API-HTML-Presentation.git
-     cd marp-api
-     ```
-
-  2. Install dependencies:
-     ```
-     npm install
-     ```
-
-  3. Start the server:
-     ```
-     npm start
-     ```
+1. Make sure you have Node.js (version 16 or later) and npm installed.
+2. Clone this repository:
+   ```
+   git clone https://github.com/pvanand07/Marpit-API-HTML-Presentation.git
+   cd marp-api
+   ```
+3. Install dependencies:
+   ```
+   npm install
+   ```
+4. Start the server:
+   ```
+   npm start
+   ```
 </details>
 
 ## Usage
 
-<h3>API Endpoint</h3>
+Send a POST request to the `/convert` endpoint with the following JSON payload:
 
-<ul>
-  <li>URL: <code>POST /convert</code></li>
-  <li>Request Body:
-    <pre>
 ```json
 {
-  "markdown": "# Your Markdown content here",
+  "markdown": "Your Markdown content here",
   "outputFormat": "pdf",
-  "options": [
-    "--theme-set", "path/to/your/theme.css"
-  ]
+  "options": ["--theme", "gaia"]
 }
 ```
-    </pre>
-    <ul>
-      <li><code>markdown</code> (required): The Markdown content to be converted.</li>
-      <li><code>outputFormat</code> (required): The desired output format. Supported values: <code>pdf</code>, <code>html</code>.</li>
-      <li><code>options</code> (optional): An array of additional Marp CLI options.</li>
-    </ul>
-  </li>
-</ul>
 
-<h3>Example Request</h3>
+- `markdown`: The Markdown content to convert
+- `outputFormat`: The desired output format (`pdf`, `pptx`, or `html`)
+- `options`: An array of additional Marp CLI options (optional)
 
-<pre>
+Example using cURL:
+
 ```bash
-curl -X POST -H "Content-Type: application/json" -d '{
-  "markdown": "# Hello, Marp!",
-  "outputFormat": "pdf"
-}' http://localhost:3000/convert
+curl -X POST -H "Content-Type: application/json" -d '{"markdown": "# Hello World", "outputFormat": "pdf"}' http://localhost:3000/convert > output.pdf
 ```
-</pre>
 
+## API Endpoints
+
+- `POST /convert`: Convert Markdown to the specified output format
+
+## Configuration
+
+The server listens on port 3000 by default. You can change this by setting the `PORT` environment variable.
+
+## Dependencies
+
+- Express.js
+- @marp-team/marp-cli
+- Puppeteer
+
+## Docker
+
+The included Dockerfile sets up the environment with Node.js, Chrome, and necessary fonts for rendering various character sets.
+
+## License
+
+[MIT License](LICENSE)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 [IMP] If you are deploying on HF🤗 spaces, keep only the below section in Readme.md (required for spaces to recognize docker)
  ```
